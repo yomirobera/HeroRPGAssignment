@@ -1,10 +1,9 @@
 package org.Noroff.YomiyRobera.Items;
 
-import org.Noroff.YomiyRobera.Slot;
+import org.Noroff.YomiyRobera.Enumerator.Slot;
 
 //Item class
 public abstract class Item {
-
 
     String name;
     int RequiredLevel;
@@ -25,12 +24,10 @@ public abstract class Item {
 
         return RequiredLevel;
     }
-
     public Slot getSlot() {
 
         return slot;
     }
-
 
     public String toString() {
         return "Item{" +

@@ -1,7 +1,8 @@
 package org.Noroff.YomiyRobera.Items;
 
+import org.Noroff.YomiyRobera.Enumerator.ArmorTypes;
 import org.Noroff.YomiyRobera.HeroAttribute;
-import org.Noroff.YomiyRobera.Slot;
+import org.Noroff.YomiyRobera.Enumerator.Slot;
 
 public class Armor extends Item {
 

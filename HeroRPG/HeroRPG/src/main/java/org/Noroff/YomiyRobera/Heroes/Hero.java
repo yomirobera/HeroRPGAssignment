@@ -1,8 +1,10 @@
 package org.Noroff.YomiyRobera.Heroes;
 
+import org.Noroff.YomiyRobera.Enumerator.ArmorTypes;
+import org.Noroff.YomiyRobera.Enumerator.WeaponTypes;
 import org.Noroff.YomiyRobera.HeroAttribute;
 import org.Noroff.YomiyRobera.Items.*;
-import org.Noroff.YomiyRobera.Slot;
+import org.Noroff.YomiyRobera.Enumerator.Slot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +15,10 @@ abstract class Hero {
 
     public String Name;
     public int Level;
-    public HeroAttribute LevelAttributes;
-    public HashMap<Slot,Item> Equipment;
-    public ArrayList<WeaponTypes> validWeaponTypes;
-
-    //Static???
-    public static ArrayList<ArmorTypes> validArmorTypes;
-
-
-
+    public HeroAttribute LevelAttributes = new HeroAttribute(0, 0,0);
+    public HashMap<Slot,Item> Equipment = new HashMap<Slot,Item>();
+    public ArrayList<WeaponTypes> validWeaponTypes = new ArrayList<WeaponTypes>();
+    public ArrayList<ArmorTypes> validArmorTypes = new ArrayList<ArmorTypes>();
 
     //Constructor
     public Hero(String Name) {
@@ -31,7 +28,6 @@ abstract class Hero {
     //Leveling up a hero
     protected abstract void AttributeGain();
     public void LevelUp() {
-
         Level++;
         //Hero leveling up method based on the child class
         AttributeGain();
@@ -39,12 +35,10 @@ abstract class Hero {
 
     //Getter for Name, Level and Hero attribute
     public String getName() {
-
         return Name;
     }
 
     public int getLevel() {
-
         return Level;
     }
 
@@ -54,7 +48,7 @@ abstract class Hero {
         int strength = LevelAttributes.getStrength();
         int dexterity = LevelAttributes.getDexterity();
 
-        int total = intelligence + strength + dexterity;
+        int total = getLevel() + intelligence + strength + dexterity;
 
         //Integrating HashMap through for loop
         for(Map.Entry<Slot,Item> set : Equipment.entrySet()) {
@@ -65,11 +59,11 @@ abstract class Hero {
 
             HeroAttribute armorAtt = armor.armorAttribute;
 
-            intelligence = armorAtt.getIntelligence();
-            strength = armorAtt.getStrength();
-            dexterity = armorAtt.getDexterity();
+            int intelligence2 = armorAtt.getIntelligence();
+            int strength2 = armorAtt.getStrength();
+            int dexterity2 = armorAtt.getDexterity();
 
-            total += intelligence + strength + dexterity;
+            total = total + intelligence2 + strength2 + dexterity2;
 
         }
         return total;
@@ -79,42 +73,52 @@ abstract class Hero {
 
 
     //Method that shows InvalidWeaponException, check if it is required level and the right weapon type
-    public class InvalidWeaponException extends Exception {
-        public InvalidWeaponException(String message) {
-
-            super(message);
+    public class InvalidWeaponException extends RuntimeException {
+        public InvalidWeaponException(String message, Throwable err) {
+            super(message, err);
         }
     }
     public void equipWeapon(Weapon weapon, WeaponTypes weapontype) throws InvalidWeaponException {
-        if(getLevel() > weapon.getRequiredLevel()) {
-            throw new InvalidWeaponException("You don't have the required level to equip weapon");
-        }
+        try {
+            if(getLevel() < weapon.getRequiredLevel()) {
+                throw new Exception("You don't have the required level to equip weapon");
+            }
 
-        if(!validWeaponTypes.contains(weapontype)){
-            throw new InvalidWeaponException("Wrong type of Weapon for this Hero class");
+            if(!validWeaponTypes.contains(weapontype)){
+                throw new Exception("Wrong type of Weapon for this Hero class");
+            }
+            Equipment.put(Slot.Weapon,weapon);
+
+        } catch(Exception err) {
+            throw new InvalidWeaponException("", err);
         }
     }
 
     //Method that shows InvalidArmorException, check if it is required level and the right armor type
-    public class InvalidArmorException extends Exception {
-        public InvalidArmorException(String message) {
-            super(message);
+    public class InvalidArmorException extends RuntimeException {
+        public InvalidArmorException(String message, Throwable err) {
+            super (message, err);
         }
     }
+    public void equipArmor(Armor armor, ArmorTypes armorType, Slot slotType) throws InvalidArmorException {
+       try {
+           if (getLevel() > armor.getRequiredLevel()) {
+               throw new Exception("You don't have the required level to equip this armor");
+           }
+           if (!validArmorTypes.contains(armorType)){
+               throw new Exception("Wrong type of armor for this Hero class");
+           }
+           Equipment.put(slotType,armor);
 
-    public void equipArmor(Armor armor, ArmorTypes armorType) throws InvalidArmorException {
-        if (getLevel() > armor.getRequiredLevel()) {
-            throw new InvalidArmorException("You don't have the required level to equip this armor");
-        }
-        if (!validArmorTypes.contains(armorType)){
-            throw new InvalidArmorException("Wrong type of armor for this Hero class");
-        }
+       } catch (Exception err) {
+           throw new InvalidArmorException("", err);
+       }
     }
 
     public void display() {
         System.out.println("Name: " +getName()+" Level: " +getLevel());
-        System.out.println("Total Attributes: " + totalAttributes());
-        System.out.println("After leveling up once: "+ "Strength: "
+        System.out.println("Total Attributes:" + totalAttributes());
+        System.out.println("Current status: "+ "Strength: "
                 + LevelAttributes.getStrength()+ " Dexterity "+LevelAttributes.getDexterity()
                 + " Intelligence: "+LevelAttributes.getIntelligence());
     }
