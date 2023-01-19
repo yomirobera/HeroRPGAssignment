@@ -16,7 +16,9 @@ abstract class Hero {
     public HeroAttribute LevelAttributes;
     public HashMap<Slot,Item> Equipment;
     public ArrayList<WeaponTypes> validWeaponTypes;
-    public ArrayList<ArmorTypes> validArmorTypes;
+
+    //Static???
+    public static ArrayList<ArmorTypes> validArmorTypes;
 
 
 
@@ -72,6 +74,7 @@ abstract class Hero {
         }
         return total;
     }
+
 
 
 
