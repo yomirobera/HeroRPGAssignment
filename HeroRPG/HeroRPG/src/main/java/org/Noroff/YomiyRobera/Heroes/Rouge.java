@@ -1,7 +1,5 @@
 package org.Noroff.YomiyRobera.Heroes;
 
-import org.Noroff.YomiyRobera.HeroAttribute;
-
 
 public class Rouge extends Hero {
 

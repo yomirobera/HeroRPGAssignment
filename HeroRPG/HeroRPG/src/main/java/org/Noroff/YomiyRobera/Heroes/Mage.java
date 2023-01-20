@@ -1,8 +1,5 @@
 package org.Noroff.YomiyRobera.Heroes;
 
-import org.Noroff.YomiyRobera.HeroAttribute;
-
-
 //  Class that extends from Hero
 public class Mage extends Hero {
     //Constructor
@@ -19,5 +16,7 @@ public class Mage extends Hero {
         LevelAttributes.setDexterity(LevelAttributes.getDexterity()+1);
         LevelAttributes.setIntelligence(LevelAttributes.getIntelligence()+5);
     }
+
+
 }
 

@@ -1,8 +1,5 @@
 package org.Noroff.YomiyRobera.Heroes;
 
-import org.Noroff.YomiyRobera.HeroAttribute;
-
-
 public class Warrior extends Hero {
 
     public Warrior(String Name) {

@@ -35,6 +35,7 @@ abstract class Hero {
 
     //Getter for Name, Level and Hero attribute
     public String getName() {
+
         return Name;
     }
 
@@ -69,12 +70,10 @@ abstract class Hero {
         return total;
     }
 
-
-
-
     //Method that shows InvalidWeaponException, check if it is required level and the right weapon type
     public class InvalidWeaponException extends RuntimeException {
         public InvalidWeaponException(String message, Throwable err) {
+
             super(message, err);
         }
     }
@@ -97,6 +96,7 @@ abstract class Hero {
     //Method that shows InvalidArmorException, check if it is required level and the right armor type
     public class InvalidArmorException extends RuntimeException {
         public InvalidArmorException(String message, Throwable err) {
+
             super (message, err);
         }
     }
@@ -115,8 +115,17 @@ abstract class Hero {
        }
     }
 
+    //This function is not fully complete
+    public String equipWeapon(WeaponTypes Weapon) {
+        return null;
+    }
+    public String equipArmor(ArmorTypes Weapon) {
+        return null;
+    }
+
     public void display() {
-        System.out.println("Name: " +getName()+" Level: " +getLevel());
+        System.out.println("Name: " +getName());
+        System.out.println("Level:"+getLevel());
         System.out.println("Total Attributes:" + totalAttributes());
         System.out.println("Current status: "+ "Strength: "
                 + LevelAttributes.getStrength()+ " Dexterity "+LevelAttributes.getDexterity()
